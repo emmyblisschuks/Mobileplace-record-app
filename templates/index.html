@@ -4,6 +4,11 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>MobilePlace.ng — Sales Record</title>
+<link rel="manifest" href="/static/manifest.json"/>
+<meta name="theme-color" content="#1C1C1C"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-title" content="MobilePlace.ng"/>
+<link rel="apple-touch-icon" href="https://i.imgur.com/pdMJjxO.png"/>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
 :root{--dk:#1C1C1C;--dk2:#252525;--dk3:#2E2E2E;--gr:#7DC242;--grd:#5a9a28;--or:#F7941D;--ord:#c97510;--tx:#FFFFFF;--mu:#9A9A9A;--br:#3A3A3A;}
@@ -12,7 +17,8 @@ body{font-family:'Segoe UI',sans-serif;background:var(--dk);color:var(--tx);min-
 .awrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:2rem;}
 .acard{background:var(--dk2);border:1px solid var(--br);border-radius:18px;padding:2.25rem 2rem;width:100%;max-width:400px;}
 .alogo{display:flex;flex-direction:column;align-items:center;margin-bottom:1.5rem;gap:6px;}
-.alogo-icon{width:64px;height:64px;border-radius:14px;background:var(--dk3);border:1px solid var(--br);display:flex;align-items:center;justify-content:center;font-size:28px;}
+.alogo-icon{width:64px;height:64px;border-radius:14px;background:var(--dk3);border:1px solid var(--br);display:flex;align-items:center;justify-content:center;font-size:28px;overflow:hidden;}
+.alogo-icon img{width:100%;height:100%;object-fit:cover;border-radius:14px;}
 .alogo .t1{font-size:17px;font-weight:600;color:var(--gr);text-align:center;}
 .alogo .t2{font-size:11px;color:var(--or);text-align:center;}
 .atitle{font-size:18px;font-weight:600;text-align:center;margin-bottom:3px;}
@@ -37,10 +43,16 @@ body{font-family:'Segoe UI',sans-serif;background:var(--dk);color:var(--tx);min-
 .divl{display:flex;align-items:center;gap:10px;margin:12px 0;color:var(--mu);font-size:11px;}
 .divl::before,.divl::after{content:'';flex:1;height:1px;background:var(--br);}
 .demo{margin-top:12px;padding-top:12px;border-top:1px solid var(--br);font-size:11px;color:var(--mu);text-align:center;line-height:1.8;}
-.appwrap{background:var(--dk);min-height:100vh;}
+
+/* Auth footer */
+.afooter{text-align:center;font-size:10px;color:var(--mu);margin-top:16px;padding-top:12px;border-top:1px solid var(--br);line-height:1.6;}
+.afooter span{color:var(--gr);font-weight:600;}
+
+.appwrap{background:var(--dk);min-height:100vh;display:flex;flex-direction:column;}
 .topbar{background:var(--dk2);border-bottom:1px solid var(--br);padding:.7rem 1.25rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10;}
 .tl{display:flex;align-items:center;gap:10px;}
-.tlogo{width:36px;height:36px;border-radius:8px;background:var(--dk3);border:1px solid var(--br);display:flex;align-items:center;justify-content:center;font-size:18px;}
+.tlogo{width:36px;height:36px;border-radius:8px;background:var(--dk3);border:1px solid var(--br);display:flex;align-items:center;justify-content:center;font-size:18px;overflow:hidden;}
+.tlogo img{width:100%;height:100%;object-fit:cover;border-radius:8px;}
 .ttitle{font-size:14px;font-weight:600;}
 .tsub{font-size:11px;color:var(--mu);}
 .tr{display:flex;align-items:center;gap:8px;}
@@ -50,11 +62,32 @@ body{font-family:'Segoe UI',sans-serif;background:var(--dk);color:var(--tx);min-
 .srole{font-size:10px;color:var(--or);font-weight:500;margin-left:2px;}
 .blogout{padding:5px 11px;font-size:11px;background:transparent;border:1px solid var(--br);border-radius:8px;color:var(--mu);cursor:pointer;transition:all .2s;}
 .blogout:hover{border-color:#f09595;color:#f09595;}
-.main{padding:1rem 1.25rem;max-width:1400px;margin:0 auto;}
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:1rem;}
+.main{padding:1rem 1.25rem;max-width:1400px;margin:0 auto;flex:1;width:100%;}
+
+/* Stats */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:10px;}
 .sc{background:var(--dk2);border:1px solid var(--br);border-radius:10px;padding:12px 14px;}
 .sl{font-size:10px;color:var(--mu);text-transform:uppercase;letter-spacing:.04em;margin-bottom:5px;}
 .sv{font-size:22px;font-weight:600;}.sv.g{color:var(--gr);}.sv.o{color:var(--or);}.sv.r{color:#f09595;}
+.scomp{font-size:10px;margin-top:4px;font-weight:500;}
+.scomp.up{color:var(--gr);}
+.scomp.dn{color:#f09595;}
+.scomp.eq{color:var(--mu);}
+
+/* Period bar */
+.period-bar{display:flex;align-items:center;gap:6px;margin-bottom:10px;flex-wrap:wrap;background:var(--dk2);border:1px solid var(--br);border-radius:10px;padding:8px 12px;}
+.pbar-year{font-size:12px;padding:5px 9px;border:1px solid var(--br);border-radius:7px;background:var(--dk3);color:var(--tx);outline:none;cursor:pointer;font-weight:600;}
+.pbar-year option{background:var(--dk3);}
+.pbar-sep{width:1px;height:20px;background:var(--br);margin:0 2px;}
+.mbtns{display:flex;gap:3px;flex-wrap:wrap;}
+.mbtn{padding:4px 9px;font-size:11px;font-weight:500;border-radius:6px;border:1px solid var(--br);background:transparent;cursor:pointer;color:var(--mu);transition:all .18s;white-space:nowrap;}
+.mbtn:hover{border-color:var(--gr);color:var(--gr);}
+.mbtn.active{background:var(--gr);color:#fff;border-color:var(--gr);}
+.mbtn.alltime{color:var(--or);border-color:transparent;}
+.mbtn.alltime:hover{border-color:var(--or);}
+.mbtn.alltime.active{background:var(--or);color:#fff;border-color:var(--or);}
+.pbar-label{font-size:10px;color:var(--mu);text-transform:uppercase;letter-spacing:.05em;margin-right:2px;}
+
 .toolbar{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-bottom:10px;}
 .toolbar input[type=text]{font-size:12px;flex:1;min-width:130px;padding:8px 12px;border:1px solid var(--br);border-radius:8px;background:var(--dk3);color:var(--tx);outline:none;}
 .toolbar input[type=text]:focus{border-color:var(--gr);}
@@ -100,15 +133,20 @@ tbody td{padding:8px 10px;color:var(--tx);vertical-align:middle;overflow:hidden;
 .confirm-box p{font-size:12px;color:var(--mu);margin-bottom:1.25rem;}
 .toast{position:fixed;bottom:24px;right:24px;background:var(--gr);color:#fff;padding:12px 20px;border-radius:10px;font-size:13px;font-weight:500;z-index:999;opacity:0;transition:opacity .3s;pointer-events:none;}
 .toast.show{opacity:1;}.toast.err{background:#A32D2D;}.toast.warn{background:var(--or);}
+
+/* Dashboard footer */
+.dfooter{text-align:center;font-size:10px;color:var(--mu);padding:1rem 0 1.25rem;border-top:1px solid var(--br);margin-top:1.25rem;}
+.dfooter span{color:var(--gr);font-weight:600;}
 </style>
 </head>
 <body>
 
+<!-- LOGIN SCREEN -->
 <div class="screen active" id="loginScreen">
 <div class="awrap">
 <div class="acard">
   <div class="alogo">
-    <div class="alogo-icon">📱</div>
+    <div class="alogo-icon"><img src="https://i.imgur.com/pdMJjxO.png" alt="MobilePlace Logo"/></div>
     <div class="t1">MobilePlace.ng</div>
     <div class="t2">Gadgets & Accessories · Lagos, Nigeria</div>
   </div>
@@ -123,15 +161,17 @@ tbody td{padding:8px 10px;color:var(--tx);vertical-align:middle;overflow:hidden;
   <div class="demo">
     Demo: <span style="color:var(--gr)">admin / admin123</span> &nbsp;·&nbsp; <span style="color:var(--or)">staff / staff123</span>
   </div>
+  <div class="afooter">© <span id="footerYearLogin"></span> <span>EmmyTech</span> · All rights reserved</div>
 </div>
 </div>
 </div>
 
+<!-- SIGNUP SCREEN -->
 <div class="screen" id="signupScreen">
 <div class="awrap">
 <div class="acard">
   <div class="alogo">
-    <div class="alogo-icon">📱</div>
+    <div class="alogo-icon"><img src="https://i.imgur.com/pdMJjxO.png" alt="MobilePlace Logo"/></div>
     <div class="t1">MobilePlace.ng</div>
     <div class="t2">Gadgets & Accessories · Lagos, Nigeria</div>
   </div>
@@ -158,15 +198,17 @@ tbody td{padding:8px 10px;color:var(--tx);vertical-align:middle;overflow:hidden;
   </div>
   <button class="btnG" onclick="doSignup()">Create Account</button>
   <div class="aswitch">Already have an account? <a onclick="showLogin()">Sign in</a></div>
+  <div class="afooter">© <span id="footerYearSignup"></span> <span>EmmyTech</span> · All rights reserved</div>
 </div>
 </div>
 </div>
 
+<!-- APP SCREEN -->
 <div class="screen" id="appScreen">
 <div class="appwrap">
   <div class="topbar">
     <div class="tl">
-      <div class="tlogo">📱</div>
+      <div class="tlogo"><img src="https://i.imgur.com/pdMJjxO.png" alt="MobilePlace Logo"/></div>
       <div>
         <div class="ttitle">MobilePlace.ng — Sales Record</div>
         <div class="tsub">Gadgets & Accessories · Lagos, Nigeria</div>
@@ -185,12 +227,42 @@ tbody td{padding:8px 10px;color:var(--tx);vertical-align:middle;overflow:hidden;
   </div>
 
   <div class="main">
+
+    <!-- Stats -->
     <div class="stats">
       <div class="sc"><div class="sl">Total Records</div><div class="sv" id="st">0</div></div>
       <div class="sc"><div class="sl">Sold</div><div class="sv g" id="ss">0</div></div>
       <div class="sc"><div class="sl">Pending</div><div class="sv o" id="sp">0</div></div>
-      <div class="sc"><div class="sl">Total Revenue</div><div class="sv g" id="sr">₦0</div></div>
+      <div class="sc">
+        <div class="sl">Total Revenue</div>
+        <div class="sv g" id="sr">₦0</div>
+        <div class="scomp" id="srcomp"></div>
+      </div>
     </div>
+
+    <!-- Period Bar -->
+    <div class="period-bar">
+      <span class="pbar-label">Period:</span>
+      <select class="pbar-year" id="yearSel" onchange="onYearChange()"></select>
+      <div class="pbar-sep"></div>
+      <div class="mbtns">
+        <button class="mbtn alltime" id="btnAllTime" onclick="setAllTime()">All Time</button>
+        <button class="mbtn" data-m="1"  onclick="setMonthBtn(1)">Jan</button>
+        <button class="mbtn" data-m="2"  onclick="setMonthBtn(2)">Feb</button>
+        <button class="mbtn" data-m="3"  onclick="setMonthBtn(3)">Mar</button>
+        <button class="mbtn" data-m="4"  onclick="setMonthBtn(4)">Apr</button>
+        <button class="mbtn" data-m="5"  onclick="setMonthBtn(5)">May</button>
+        <button class="mbtn" data-m="6"  onclick="setMonthBtn(6)">Jun</button>
+        <button class="mbtn" data-m="7"  onclick="setMonthBtn(7)">Jul</button>
+        <button class="mbtn" data-m="8"  onclick="setMonthBtn(8)">Aug</button>
+        <button class="mbtn" data-m="9"  onclick="setMonthBtn(9)">Sep</button>
+        <button class="mbtn" data-m="10" onclick="setMonthBtn(10)">Oct</button>
+        <button class="mbtn" data-m="11" onclick="setMonthBtn(11)">Nov</button>
+        <button class="mbtn" data-m="12" onclick="setMonthBtn(12)">Dec</button>
+      </div>
+    </div>
+
+    <!-- Toolbar -->
     <div class="toolbar">
       <input type="text" id="srch" placeholder="Search name, invoice, IMEI, goods..." oninput="render()"/>
       <select id="fstat" onchange="render()">
@@ -203,6 +275,7 @@ tbody td{padding:8px 10px;color:var(--tx);vertical-align:middle;overflow:hidden;
       <button class="btn p" onclick="openAdd()">+ New Record</button>
       <button class="btn o" onclick="exportCSV()">⬇ Export CSV</button>
     </div>
+
     <div class="tw">
     <table>
     <colgroup>
@@ -222,10 +295,14 @@ tbody td{padding:8px 10px;color:var(--tx);vertical-align:middle;overflow:hidden;
     <tbody id="tbody"></tbody>
     </table>
     </div>
+
+    <!-- Dashboard footer -->
+    <div class="dfooter">© <span id="footerYearApp"></span> <span>EmmyTech</span> · All rights reserved</div>
   </div>
 </div>
 </div>
 
+<!-- Add / Edit Modal -->
 <div class="overlay" id="modal">
 <div class="modal">
   <h2 id="mtitle">New Record</h2>
@@ -258,6 +335,7 @@ tbody td{padding:8px 10px;color:var(--tx);vertical-align:middle;overflow:hidden;
 </div>
 </div>
 
+<!-- Delete Confirm -->
 <div class="confirm-overlay" id="confirmWrap">
   <div class="confirm-box">
     <h3>Delete this record?</h3>
@@ -272,16 +350,41 @@ tbody td{padding:8px 10px;color:var(--tx);vertical-align:middle;overflow:hidden;
 <div class="toast" id="toast"></div>
 
 <script>
-let data=[];let editId=null;let pendingDelId=null;let currentUser=null;
+// ── State ────────────────────────────────────────────────
+let data = [];
+let editId = null;
+let pendingDelId = null;
+let currentUser = null;
 
-function showToast(msg,type){
-  const t=document.getElementById('toast');
-  t.textContent=msg;
-  t.className='toast'+(type==='err'?' err':type==='warn'?' warn':'');
+const NOW = new Date();
+let selectedYear  = NOW.getFullYear();
+let selectedMonth = NOW.getMonth() + 1; // 1-12
+let allTime = false;
+
+const MONTH_NAMES = ['January','February','March','April','May','June',
+                     'July','August','September','October','November','December'];
+const MONTH_SHORT = ['Jan','Feb','Mar','Apr','May','Jun',
+                     'Jul','Aug','Sep','Oct','Nov','Dec'];
+
+// ── Footer years ─────────────────────────────────────────
+(function(){
+  const y = NOW.getFullYear();
+  ['footerYearLogin','footerYearSignup','footerYearApp'].forEach(id=>{
+    const el = document.getElementById(id);
+    if(el) el.textContent = y;
+  });
+})();
+
+// ── Toast ────────────────────────────────────────────────
+function showToast(msg, type){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast' + (type==='err'?' err': type==='warn'?' warn':'');
   t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'),2800);
+  setTimeout(()=>t.classList.remove('show'), 2800);
 }
 
+// ── Auth screens ─────────────────────────────────────────
 function showLogin(){
   document.getElementById('signupScreen').classList.remove('active');
   document.getElementById('appScreen').classList.remove('active');
@@ -295,40 +398,40 @@ function showSignup(){
 }
 
 async function doLogin(){
-  const username=document.getElementById('l-user').value.trim();
-  const password=document.getElementById('l-pass').value;
-  const err=document.getElementById('loginErr');
-  const res=await fetch('/api/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({username,password})});
-  const data=await res.json();
-  if(data.success){
-    currentUser=data.user;
+  const username = document.getElementById('l-user').value.trim();
+  const password = document.getElementById('l-pass').value;
+  const err = document.getElementById('loginErr');
+  const res = await fetch('/api/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({username,password})});
+  const json = await res.json();
+  if(json.success){
+    currentUser = json.user;
     err.classList.remove('show');
     showApp();
   } else {
-    err.textContent=data.error;
+    err.textContent = json.error;
     err.classList.add('show');
   }
 }
-document.getElementById('l-pass').addEventListener('keydown',function(e){if(e.key==='Enter')doLogin();});
+document.getElementById('l-pass').addEventListener('keydown', e=>{ if(e.key==='Enter') doLogin(); });
 
 async function doSignup(){
-  const fname=document.getElementById('s-fname').value.trim();
-  const lname=document.getElementById('s-lname').value.trim();
-  const username=document.getElementById('s-user').value.trim();
-  const password=document.getElementById('s-pass').value;
-  const password2=document.getElementById('s-pass2').value;
-  const role=document.getElementById('s-role').value;
-  const err=document.getElementById('signupErr');
-  const ok=document.getElementById('signupOk');
-  err.classList.remove('show');ok.classList.remove('show');
-  if(password!==password2){err.textContent='Passwords do not match.';err.classList.add('show');return;}
-  const res=await fetch('/api/signup',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({fname,lname,username,password,role})});
-  const data=await res.json();
-  if(data.success){
-    ok.textContent='Account created! You can now sign in.';ok.classList.add('show');
-    setTimeout(()=>showLogin(),1800);
+  const fname = document.getElementById('s-fname').value.trim();
+  const lname = document.getElementById('s-lname').value.trim();
+  const username = document.getElementById('s-user').value.trim();
+  const password = document.getElementById('s-pass').value;
+  const password2 = document.getElementById('s-pass2').value;
+  const role = document.getElementById('s-role').value;
+  const err = document.getElementById('signupErr');
+  const ok  = document.getElementById('signupOk');
+  err.classList.remove('show'); ok.classList.remove('show');
+  if(password !== password2){ err.textContent='Passwords do not match.'; err.classList.add('show'); return; }
+  const res = await fetch('/api/signup',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({fname,lname,username,password,role})});
+  const json = await res.json();
+  if(json.success){
+    ok.textContent='Account created! You can now sign in.'; ok.classList.add('show');
+    setTimeout(()=>showLogin(), 1800);
   } else {
-    err.textContent=data.error;err.classList.add('show');
+    err.textContent = json.error; err.classList.add('show');
   }
 }
 
@@ -337,46 +440,154 @@ function showApp(){
   document.getElementById('signupScreen').classList.remove('active');
   document.getElementById('appScreen').classList.add('active');
   if(currentUser){
-    const initials=currentUser.name.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
-    document.getElementById('staffAv').textContent=initials;
-    document.getElementById('staffName').textContent=currentUser.name;
-    document.getElementById('staffRole').textContent=currentUser.role;
+    const initials = currentUser.name.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
+    document.getElementById('staffAv').textContent  = initials;
+    document.getElementById('staffName').textContent = currentUser.name;
+    document.getElementById('staffRole').textContent = currentUser.role;
   }
+  buildYearSel();
+  updatePeriodButtons();
   loadRecords();
 }
 
 async function doLogout(){
   await fetch('/api/logout',{method:'POST'});
-  currentUser=null;
+  currentUser = null;
   showLogin();
-  document.getElementById('l-pass').value='';
+  document.getElementById('l-pass').value = '';
   document.getElementById('loginErr').classList.remove('show');
 }
 
+// ── Data ─────────────────────────────────────────────────
 async function loadRecords(){
-  const res=await fetch('/api/records');
-  data=await res.json();
+  const res = await fetch('/api/records');
+  data = await res.json();
   render();
 }
 
-function fmt(n){return Number(n||0).toLocaleString('en-NG');}
-function statusBadge(s){const m={Sold:'bs',Pending:'bp',Returned:'brt',Reserved:'bb'};return `<span class="badge ${m[s]||'bb'}">${s||'—'}</span>`;}
+function fmt(n){ return Number(n||0).toLocaleString('en-NG'); }
+function statusBadge(s){
+  const m = {Sold:'bs',Pending:'bp',Returned:'brt',Reserved:'bb'};
+  return `<span class="badge ${m[s]||'bb'}">${s||'—'}</span>`;
+}
 
-function render(){
-  const q=(document.getElementById('srch').value||'').toLowerCase();
-  const fs=document.getElementById('fstat').value;
-  let rows=data.filter(r=>{
-    const mq=!q||[r.cust,r.inv,r.goods,r.imei1,r.imei2,r.by,r.acct,r.color,r.stor].some(v=>(v||'').toLowerCase().includes(q));
-    return mq&&(!fs||r.stat===fs);
+// ── Period logic ──────────────────────────────────────────
+function buildYearSel(){
+  const sel = document.getElementById('yearSel');
+  sel.innerHTML = '';
+  const cur = NOW.getFullYear();
+  for(let y = cur; y >= 2020; y--){
+    const o = document.createElement('option');
+    o.value = y; o.textContent = y;
+    if(y === selectedYear) o.selected = true;
+    sel.appendChild(o);
+  }
+}
+
+function updatePeriodButtons(){
+  document.querySelectorAll('.mbtn').forEach(b => b.classList.remove('active'));
+  if(allTime){
+    document.getElementById('btnAllTime').classList.add('active');
+  } else {
+    document.querySelectorAll('.mbtn[data-m]').forEach(b=>{
+      if(parseInt(b.dataset.m) === selectedMonth) b.classList.add('active');
+    });
+  }
+}
+
+function setAllTime(){
+  allTime = true;
+  updatePeriodButtons();
+  render();
+}
+
+function setMonthBtn(m){
+  allTime = false;
+  selectedMonth = m;
+  updatePeriodButtons();
+  render();
+}
+
+function onYearChange(){
+  selectedYear = parseInt(document.getElementById('yearSel').value);
+  if(!allTime) render();
+}
+
+function filterByPeriod(records){
+  if(allTime) return records;
+  return records.filter(r=>{
+    if(!r.date) return false;
+    const parts = r.date.split('-');
+    return parseInt(parts[0]) === selectedYear && parseInt(parts[1]) === selectedMonth;
   });
-  const sold=data.filter(r=>r.stat==='Sold');
-  document.getElementById('st').textContent=data.length;
-  document.getElementById('ss').textContent=sold.length;
-  document.getElementById('sp').textContent=data.filter(r=>r.stat==='Pending').length;
-  document.getElementById('sr').textContent='₦'+fmt(sold.reduce((a,r)=>a+(parseFloat(r.price)||0),0));
-  const tb=document.getElementById('tbody');
-  if(!rows.length){tb.innerHTML=`<tr><td colspan="14" class="empty">No records found. Click "+ New Record" to add one.</td></tr>`;return;}
-  tb.innerHTML=rows.map((r,i)=>`<tr>
+}
+
+function getPrevMonthRevenue(){
+  // Returns revenue of sold items from the previous month
+  let pm = selectedMonth - 1, py = selectedYear;
+  if(pm === 0){ pm = 12; py--; }
+  const prev = data.filter(r=>{
+    if(!r.date || r.stat !== 'Sold') return false;
+    const parts = r.date.split('-');
+    return parseInt(parts[0]) === py && parseInt(parts[1]) === pm;
+  });
+  return prev.reduce((a,r)=>a+(parseFloat(r.price)||0), 0);
+}
+
+// ── Render ────────────────────────────────────────────────
+function render(){
+  const q  = (document.getElementById('srch').value||'').toLowerCase();
+  const fs = document.getElementById('fstat').value;
+  const periodData = filterByPeriod(data);
+
+  let rows = periodData.filter(r=>{
+    const mq = !q || [r.cust,r.inv,r.goods,r.imei1,r.imei2,r.by,r.acct,r.color,r.stor].some(v=>(v||'').toLowerCase().includes(q));
+    return mq && (!fs || r.stat===fs);
+  });
+
+  const sold = periodData.filter(r=>r.stat==='Sold');
+  const curRevenue = sold.reduce((a,r)=>a+(parseFloat(r.price)||0),0);
+
+  document.getElementById('st').textContent = periodData.length;
+  document.getElementById('ss').textContent = sold.length;
+  document.getElementById('sp').textContent = periodData.filter(r=>r.stat==='Pending').length;
+  document.getElementById('sr').textContent = '₦'+fmt(curRevenue);
+
+  // Revenue comparison vs last month
+  const comp = document.getElementById('srcomp');
+  if(!allTime){
+    const prevRev = getPrevMonthRevenue();
+    if(prevRev === 0 && curRevenue === 0){
+      comp.textContent = '';
+      comp.className = 'scomp';
+    } else if(prevRev === 0 && curRevenue > 0){
+      comp.textContent = '↑ New this month';
+      comp.className = 'scomp up';
+    } else {
+      const diff = curRevenue - prevRev;
+      const pct  = Math.abs((diff / prevRev) * 100).toFixed(1);
+      if(diff > 0){
+        comp.textContent = `↑ +${pct}% vs last month`;
+        comp.className = 'scomp up';
+      } else if(diff < 0){
+        comp.textContent = `↓ -${pct}% vs last month`;
+        comp.className = 'scomp dn';
+      } else {
+        comp.textContent = '→ Same as last month';
+        comp.className = 'scomp eq';
+      }
+    }
+  } else {
+    comp.textContent = '';
+    comp.className = 'scomp';
+  }
+
+  const tb = document.getElementById('tbody');
+  if(!rows.length){
+    tb.innerHTML = `<tr><td colspan="14" class="empty">No records found. Click "+ New Record" to add one.</td></tr>`;
+    return;
+  }
+  tb.innerHTML = rows.map((r,i)=>`<tr>
     <td style="color:var(--mu);font-size:10px;">${i+1}</td>
     <td style="color:var(--mu);">${r.date||'—'}</td>
     <td style="color:var(--mu);font-size:11px;">${r.inv||'—'}</td>
@@ -397,84 +608,124 @@ function render(){
   </tr>`).join('');
 }
 
+// ── Add / Edit ────────────────────────────────────────────
+function getDefaultDate(){
+  // If a specific month is selected, default to today if it's that month, else 1st of that month
+  if(allTime){
+    return NOW.toISOString().slice(0,10);
+  }
+  const todayY = NOW.getFullYear(), todayM = NOW.getMonth()+1;
+  if(selectedYear === todayY && selectedMonth === todayM){
+    return NOW.toISOString().slice(0,10);
+  }
+  return `${selectedYear}-${String(selectedMonth).padStart(2,'0')}-01`;
+}
+
 function openAdd(){
-  editId=null;
-  document.getElementById('mtitle').textContent='New Record';
-  document.getElementById('f-date').value=new Date().toISOString().slice(0,10);
+  editId = null;
+  document.getElementById('mtitle').textContent = 'New Record';
+  document.getElementById('f-date').value = getDefaultDate();
   ['inv','cust','goods','stor','color','imei1','imei2','by','acct','price'].forEach(f=>document.getElementById('f-'+f).value='');
-  document.getElementById('f-inv').value='MP-'+Date.now().toString().slice(-6);
-  document.getElementById('f-stat').value='Sold';
-  if(currentUser)document.getElementById('f-by').value=currentUser.name;
+  document.getElementById('f-inv').value = 'MP-'+Date.now().toString().slice(-6);
+  document.getElementById('f-stat').value = 'Sold';
+  if(currentUser) document.getElementById('f-by').value = currentUser.name;
   document.getElementById('modal').classList.add('open');
 }
 
 function openEdit(id){
-  const r=data.find(d=>d.id===id);if(!r)return;
-  editId=id;
-  document.getElementById('mtitle').textContent='Edit Record';
-  document.getElementById('f-date').value=r.date||'';
-  document.getElementById('f-inv').value=r.inv||'';
-  document.getElementById('f-cust').value=r.cust||'';
-  document.getElementById('f-goods').value=r.goods||'';
-  document.getElementById('f-stor').value=r.stor||'';
-  document.getElementById('f-color').value=r.color||'';
-  document.getElementById('f-imei1').value=r.imei1||'';
-  document.getElementById('f-imei2').value=r.imei2||'';
-  document.getElementById('f-by').value=r.by||'';
-  document.getElementById('f-acct').value=r.acct||'';
-  document.getElementById('f-price').value=r.price||'';
-  document.getElementById('f-stat').value=r.stat||'Sold';
+  const r = data.find(d=>d.id===id); if(!r) return;
+  editId = id;
+  document.getElementById('mtitle').textContent = 'Edit Record';
+  document.getElementById('f-date').value  = r.date||'';
+  document.getElementById('f-inv').value   = r.inv||'';
+  document.getElementById('f-cust').value  = r.cust||'';
+  document.getElementById('f-goods').value = r.goods||'';
+  document.getElementById('f-stor').value  = r.stor||'';
+  document.getElementById('f-color').value = r.color||'';
+  document.getElementById('f-imei1').value = r.imei1||'';
+  document.getElementById('f-imei2').value = r.imei2||'';
+  document.getElementById('f-by').value    = r.by||'';
+  document.getElementById('f-acct').value  = r.acct||'';
+  document.getElementById('f-price').value = r.price||'';
+  document.getElementById('f-stat').value  = r.stat||'Sold';
   document.getElementById('modal').classList.add('open');
 }
 
 async function saveRecord(){
-  const goods=document.getElementById('f-goods').value.trim();
-  if(!goods){showToast('Please enter Goods & Services.','err');return;}
-  const rec={
-    id:editId||Date.now().toString(36)+Math.random().toString(36).slice(2,5),
-    date:document.getElementById('f-date').value,
-    inv:document.getElementById('f-inv').value.trim(),
-    cust:document.getElementById('f-cust').value.trim(),
-    goods,stor:document.getElementById('f-stor').value.trim(),
-    color:document.getElementById('f-color').value.trim(),
-    imei1:document.getElementById('f-imei1').value.trim(),
-    imei2:document.getElementById('f-imei2').value.trim(),
-    by:document.getElementById('f-by').value.trim(),
-    stat:document.getElementById('f-stat').value,
-    price:document.getElementById('f-price').value,
-    acct:document.getElementById('f-acct').value.trim()
+  const goods = document.getElementById('f-goods').value.trim();
+  if(!goods){ showToast('Please enter Goods & Services.','err'); return; }
+  const rec = {
+    id:    editId || Date.now().toString(36)+Math.random().toString(36).slice(2,5),
+    date:  document.getElementById('f-date').value,
+    inv:   document.getElementById('f-inv').value.trim(),
+    cust:  document.getElementById('f-cust').value.trim(),
+    goods,
+    stor:  document.getElementById('f-stor').value.trim(),
+    color: document.getElementById('f-color').value.trim(),
+    imei1: document.getElementById('f-imei1').value.trim(),
+    imei2: document.getElementById('f-imei2').value.trim(),
+    by:    document.getElementById('f-by').value.trim(),
+    stat:  document.getElementById('f-stat').value,
+    price: document.getElementById('f-price').value,
+    acct:  document.getElementById('f-acct').value.trim()
   };
   if(editId){
     await fetch(`/api/records/${editId}`,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(rec)});
   } else {
     await fetch('/api/records',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(rec)});
   }
-  await loadRecords();closeModal();
-  showToast(editId?'Record updated!':'Record saved!');
+  await loadRecords(); closeModal();
+  showToast(editId ? 'Record updated!' : 'Record saved!');
 }
 
-function askDel(id){pendingDelId=id;document.getElementById('confirmWrap').classList.add('open');}
-function closeConfirm(){pendingDelId=null;document.getElementById('confirmWrap').classList.remove('open');}
-document.getElementById('confirmYes').onclick=async function(){
-  if(!pendingDelId)return;
+// ── Delete ────────────────────────────────────────────────
+function askDel(id){ pendingDelId=id; document.getElementById('confirmWrap').classList.add('open'); }
+function closeConfirm(){ pendingDelId=null; document.getElementById('confirmWrap').classList.remove('open'); }
+document.getElementById('confirmYes').onclick = async function(){
+  if(!pendingDelId) return;
   await fetch(`/api/records/${pendingDelId}`,{method:'DELETE'});
-  await loadRecords();closeConfirm();
+  await loadRecords(); closeConfirm();
   showToast('Record deleted.','warn');
 };
 
-function closeModal(){document.getElementById('modal').classList.remove('open');}
-document.getElementById('modal').addEventListener('click',function(e){if(e.target===this)closeModal();});
-document.getElementById('confirmWrap').addEventListener('click',function(e){if(e.target===this)closeConfirm();});
+function closeModal(){ document.getElementById('modal').classList.remove('open'); }
+document.getElementById('modal').addEventListener('click', function(e){ if(e.target===this) closeModal(); });
+document.getElementById('confirmWrap').addEventListener('click', function(e){ if(e.target===this) closeConfirm(); });
 
+// ── Smart CSV Export ──────────────────────────────────────
 function exportCSV(){
-  if(!data.length){showToast('No records to export.','err');return;}
-  const cols=['SN','Date','Invoice No','Customer Name','Goods & Services','Storage','Color','IMEI 1','IMEI 2','Sold By','Status','Price','Account'];
-  const rows=data.map((r,i)=>[i+1,r.date,r.inv,r.cust,r.goods,r.stor,r.color,r.imei1,r.imei2,r.by,r.stat,r.price,r.acct].map(v=>`"${(v||'').toString().replace(/"/g,'""')}"`).join(','));
-  const csv=[cols.join(','),...rows].join('\n');
-  const a=document.createElement('a');
-  a.href='data:text/csv;charset=utf-8,\uFEFF'+encodeURIComponent(csv);
-  a.download='MobilePlace_Sales_'+new Date().toISOString().slice(0,10)+'.csv';
-  a.click();showToast('CSV exported!');
+  const periodData = filterByPeriod(data);
+  if(!periodData.length){ showToast('No records to export.','err'); return; }
+
+  const cols = ['SN','Date','Invoice No','Customer Name','Goods & Services',
+                'Storage','Color','IMEI 1','IMEI 2','Sold By','Status','Price','Account'];
+  const rows = periodData.map((r,i)=>[
+    i+1,r.date,r.inv,r.cust,r.goods,r.stor,r.color,r.imei1,r.imei2,r.by,r.stat,r.price,r.acct
+  ].map(v=>`"${(v||'').toString().replace(/"/g,'""')}"`).join(','));
+  const csv = [cols.join(','),...rows].join('\n');
+
+  // Smart filename
+  let fname;
+  if(allTime){
+    fname = `MobilePlace_All_Time_${NOW.toISOString().slice(0,10)}`;
+  } else {
+    fname = `MobilePlace_${MONTH_SHORT[selectedMonth-1]}_${selectedYear}`;
+  }
+
+  const a = document.createElement('a');
+  a.href = 'data:text/csv;charset=utf-8,\uFEFF'+encodeURIComponent(csv);
+  a.download = fname+'.csv';
+  a.click();
+  showToast('CSV exported!');
+}
+</script>
+<script>
+if('serviceWorker' in navigator){
+  window.addEventListener('load', ()=>{
+    navigator.serviceWorker.register('/static/sw.js')
+      .then(r=>console.log('SW registered'))
+      .catch(e=>console.log('SW error',e));
+  });
 }
 </script>
 </body>

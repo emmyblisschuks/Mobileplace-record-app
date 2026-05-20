@@ -1,0 +1,22 @@
+{
+  "name": "MobilePlace.ng — Sales Record",
+  "short_name": "MobilePlace",
+  "description": "Sales Record System for MobilePlace.ng",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#1C1C1C",
+  "theme_color": "#1C1C1C",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "https://i.imgur.com/pdMJjxO.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "https://i.imgur.com/pdMJjxO.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
