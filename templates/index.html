@@ -43,7 +43,6 @@ body{font-family:'Segoe UI',sans-serif;background:var(--dk);color:var(--tx);min-
 .aswitch a{color:var(--gr);cursor:pointer;}
 .divl{display:flex;align-items:center;gap:10px;margin:12px 0;color:var(--mu);font-size:11px;}
 .divl::before,.divl::after{content:'';flex:1;height:1px;background:var(--br);}
-.demo{margin-top:12px;padding-top:12px;border-top:1px solid var(--br);font-size:11px;color:var(--mu);text-align:center;line-height:1.8;}
 .afooter{text-align:center;font-size:10px;color:var(--mu);margin-top:16px;padding-top:12px;border-top:1px solid var(--br);line-height:1.6;}
 .afooter span{color:var(--gr);font-weight:600;}
 .appwrap{background:var(--dk);min-height:100vh;display:flex;flex-direction:column;}
@@ -91,6 +90,12 @@ body{font-family:'Segoe UI',sans-serif;background:var(--dk);color:var(--tx);min-
 .btn.o{background:var(--or);color:#fff;border-color:var(--or);}.btn.o:hover{background:var(--ord);}
 .btn.d{color:#f09595;}.btn.d:hover{border-color:#f09595;background:rgba(227,74,74,.08);}
 .btn.xs{padding:3px 8px;font-size:11px;}
+/* Undo/Redo disabled state */
+.btn:disabled{opacity:.35;cursor:not-allowed;pointer-events:none;}
+/* Bin button */
+.btn.bin{position:relative;color:#c084fc;border-color:rgba(192,132,252,.35);}
+.btn.bin:hover{border-color:#c084fc;background:rgba(192,132,252,.08);color:#c084fc;}
+.bin-badge{position:absolute;top:-5px;right:-5px;background:#c084fc;color:#fff;font-size:9px;font-weight:700;width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center;line-height:1;}
 .tw{overflow-x:auto;border:1px solid var(--br);border-radius:10px;background:var(--dk2);}
 table{width:100%;border-collapse:collapse;font-size:12px;table-layout:fixed;}
 thead th{background:var(--dk3);padding:8px 10px;text-align:left;font-weight:600;font-size:10px;text-transform:uppercase;letter-spacing:.04em;color:var(--mu);border-bottom:1px solid var(--br);white-space:nowrap;}
@@ -130,6 +135,21 @@ tbody td{padding:8px 10px;color:var(--tx);vertical-align:middle;overflow:hidden;
 .del-pass-wrap input::placeholder{color:var(--mu);}
 .del-err{font-size:11px;color:#f09595;margin-top:6px;display:none;text-align:left;}
 .del-err.show{display:block;}
+/* Bin Modal */
+.bin-modal{width:820px;max-width:96vw;}
+.bin-modal h2{display:flex;align-items:center;gap:8px;}
+.bin-empty{text-align:center;padding:2.5rem;color:var(--mu);font-size:13px;}
+.bin-tw{overflow-x:auto;border:1px solid var(--br);border-radius:10px;background:var(--dk3);margin-top:12px;}
+.bin-tw table{width:100%;border-collapse:collapse;font-size:12px;}
+.bin-tw thead th{background:rgba(192,132,252,.08);padding:7px 10px;text-align:left;font-weight:600;font-size:10px;text-transform:uppercase;letter-spacing:.04em;color:#c084fc;border-bottom:1px solid var(--br);}
+.bin-tw tbody tr{border-bottom:1px solid var(--br);}
+.bin-tw tbody tr:last-child{border-bottom:none;}
+.bin-tw tbody tr:hover{background:rgba(192,132,252,.04);}
+.bin-tw tbody td{padding:7px 10px;color:var(--tx);vertical-align:middle;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:130px;}
+.bin-note{font-size:11px;color:var(--mu);margin-top:10px;text-align:center;}
+/* Bin gate */
+.bin-gate{padding:2rem;text-align:center;}
+.bin-gate p{font-size:12px;color:var(--mu);margin-bottom:1rem;}
 .toast{position:fixed;bottom:24px;right:24px;background:var(--gr);color:#fff;padding:12px 20px;border-radius:10px;font-size:13px;font-weight:500;z-index:999;opacity:0;transition:opacity .3s;pointer-events:none;}
 .toast.show{opacity:1;}.toast.err{background:#A32D2D;}.toast.warn{background:var(--or);}
 .dfooter{text-align:center;font-size:10px;color:var(--mu);padding:1rem 0 1.25rem;border-top:1px solid var(--br);margin-top:1.25rem;}
@@ -155,9 +175,6 @@ tbody td{padding:8px 10px;color:var(--tx);vertical-align:middle;overflow:hidden;
   <button class="btnG" onclick="doLogin()">Sign In</button>
   <div class="divl">or</div>
   <button class="btnO" onclick="showSignup()">Create New Account</button>
-  <div class="demo">
-    Demo: <span style="color:var(--gr)">admin / admin123</span> &nbsp;·&nbsp; <span style="color:var(--or)">staff / staff123</span>
-  </div>
   <div class="afooter">© <span id="footerYearLogin"></span> <span>EmmyTech</span> · All rights reserved</div>
 </div>
 </div>
@@ -265,8 +282,16 @@ tbody td{padding:8px 10px;color:var(--tx);vertical-align:middle;overflow:hidden;
         <option value="Returned">Returned</option>
         <option value="Reserved">Reserved</option>
       </select>
+      <!-- Undo / Redo -->
+      <button class="btn" id="btnUndo" onclick="doUndo()" title="Undo" disabled>&#8592; Undo</button>
+      <button class="btn" id="btnRedo" onclick="doRedo()" title="Redo" disabled>Redo &#8594;</button>
       <button class="btn p" onclick="openAdd()">+ New Record</button>
       <button class="btn o" onclick="exportCSV()">&#11015; Export CSV</button>
+      <!-- Bin -->
+      <button class="btn bin" id="btnBin" onclick="openBin()" title="Recycle Bin">
+        &#128465; Bin
+        <span class="bin-badge" id="binBadge" style="display:none">0</span>
+      </button>
     </div>
 
     <div class="tw">
@@ -316,7 +341,6 @@ tbody td{padding:8px 10px;color:var(--tx);vertical-align:middle;overflow:hidden;
     <div class="mfg"><label>IMEI 2</label><input type="text" id="f-imei2" placeholder="(dual SIM)"/></div>
   </div>
   <div class="mfr">
-    <!-- CHANGED: Sold By is now a dropdown -->
     <div class="mfg"><label>Sold By</label>
       <select id="f-by">
         <option value="">-- Select Staff --</option>
@@ -339,8 +363,8 @@ tbody td{padding:8px 10px;color:var(--tx);vertical-align:middle;overflow:hidden;
 <!-- Delete Confirm — requires password -->
 <div class="confirm-overlay" id="confirmWrap">
   <div class="confirm-box">
-    <h3>&#128465; Delete Record?</h3>
-    <p>This cannot be undone. Enter your login password to confirm.</p>
+    <h3>&#128465; Move to Bin?</h3>
+    <p>The record will be moved to the Recycle Bin. Enter your login password to confirm.</p>
     <div class="del-pass-wrap">
       <label>Your Password</label>
       <input type="password" id="delPass" placeholder="Enter your password"/>
@@ -348,7 +372,49 @@ tbody td{padding:8px 10px;color:var(--tx);vertical-align:middle;overflow:hidden;
     </div>
     <div style="display:flex;gap:8px;justify-content:center;">
       <button class="btn" onclick="closeConfirm()">Cancel</button>
-      <button class="btn d" id="confirmYes">Delete</button>
+      <button class="btn d" id="confirmYes">Move to Bin</button>
+    </div>
+  </div>
+</div>
+
+<!-- Bin Gate — password required to open -->
+<div class="confirm-overlay" id="binGateWrap">
+  <div class="confirm-box">
+    <h3 style="color:#c084fc;">&#128465; Recycle Bin</h3>
+    <p>Enter your password to access deleted records.</p>
+    <div class="del-pass-wrap">
+      <label>Your Password</label>
+      <input type="password" id="binGatePass" placeholder="Enter your password"/>
+      <div class="del-err" id="binGateErr"></div>
+    </div>
+    <div style="display:flex;gap:8px;justify-content:center;">
+      <button class="btn" onclick="closeBinGate()">Cancel</button>
+      <button class="btn" style="background:#c084fc;color:#fff;border-color:#c084fc;" id="binGateYes">Open Bin</button>
+    </div>
+  </div>
+</div>
+
+<!-- Bin Modal -->
+<div class="overlay" id="binModal">
+<div class="modal bin-modal">
+  <h2><span style="color:#c084fc;">&#128465;</span> Recycle Bin <span style="font-size:11px;color:var(--mu);font-weight:400;margin-left:6px;" id="binCount"></span></h2>
+  <div id="binContent"></div>
+  <div class="bin-note">Records here can be restored or permanently deleted.</div>
+  <div class="ma">
+    <button class="btn" onclick="closeBinModal()">Close</button>
+    <button class="btn d" onclick="emptyBin()" id="btnEmptyBin">&#128465; Empty Bin</button>
+  </div>
+</div>
+</div>
+
+<!-- Permanent Delete Confirm -->
+<div class="confirm-overlay" id="permDelWrap">
+  <div class="confirm-box">
+    <h3 style="color:#f09595;">&#9888; Permanently Delete?</h3>
+    <p>This record will be erased forever and cannot be recovered.</p>
+    <div style="display:flex;gap:8px;justify-content:center;">
+      <button class="btn" onclick="closePermDel()">Cancel</button>
+      <button class="btn d" id="permDelYes">Delete Forever</button>
     </div>
   </div>
 </div>
@@ -358,9 +424,15 @@ tbody td{padding:8px 10px;color:var(--tx);vertical-align:middle;overflow:hidden;
 <script>
 // ── State ────────────────────────────────────────────────
 let data = [];
+let deletedRecords = []; // Soft-deleted records (bin)
 let editId = null;
 let pendingDelId = null;
+let pendingPermDelId = null;
 let currentUser = null;
+
+// Undo / Redo stacks — each entry: { data: [...], deletedRecords: [...] }
+let undoStack = [];
+let redoStack = [];
 
 const NOW = new Date();
 let selectedYear  = NOW.getFullYear();
@@ -388,6 +460,48 @@ function showToast(msg, type){
   t.className = 'toast' + (type==='err'?' err': type==='warn'?' warn':'');
   t.classList.add('show');
   setTimeout(()=>t.classList.remove('show'), 2800);
+}
+
+// ── Undo / Redo ───────────────────────────────────────────
+function snapshotState(){
+  // Called BEFORE making a change; saves current state to undo stack
+  undoStack.push({ data: JSON.parse(JSON.stringify(data)), deleted: JSON.parse(JSON.stringify(deletedRecords)) });
+  if(undoStack.length > 50) undoStack.shift(); // cap at 50
+  redoStack = []; // new action clears redo
+  updateUndoRedoBtns();
+}
+
+function updateUndoRedoBtns(){
+  document.getElementById('btnUndo').disabled = undoStack.length === 0;
+  document.getElementById('btnRedo').disabled = redoStack.length === 0;
+}
+
+async function doUndo(){
+  if(!undoStack.length) return;
+  // Push current to redo before restoring
+  redoStack.push({ data: JSON.parse(JSON.stringify(data)), deleted: JSON.parse(JSON.stringify(deletedRecords)) });
+  const prev = undoStack.pop();
+  data = prev.data;
+  deletedRecords = prev.deleted;
+  // Sync to server
+  await fetch('/api/records/bulk', { method:'PUT', headers:{'Content-Type':'application/json'}, body: JSON.stringify(data) });
+  updateUndoRedoBtns();
+  updateBinBadge();
+  render();
+  showToast('Undo successful.','warn');
+}
+
+async function doRedo(){
+  if(!redoStack.length) return;
+  undoStack.push({ data: JSON.parse(JSON.stringify(data)), deleted: JSON.parse(JSON.stringify(deletedRecords)) });
+  const next = redoStack.pop();
+  data = next.data;
+  deletedRecords = next.deleted;
+  await fetch('/api/records/bulk', { method:'PUT', headers:{'Content-Type':'application/json'}, body: JSON.stringify(data) });
+  updateUndoRedoBtns();
+  updateBinBadge();
+  render();
+  showToast('Redo successful.');
 }
 
 // ── Auth screens ─────────────────────────────────────────
@@ -459,6 +573,9 @@ function showApp(){
 async function doLogout(){
   await fetch('/api/logout',{method:'POST'});
   currentUser = null;
+  // Clear stacks on logout
+  undoStack = []; redoStack = [];
+  updateUndoRedoBtns();
   showLogin();
   document.getElementById('l-pass').value = '';
   document.getElementById('loginErr').classList.remove('show');
@@ -468,7 +585,34 @@ async function doLogout(){
 async function loadRecords(){
   const res = await fetch('/api/records');
   data = await res.json();
+  // Also load bin from server if endpoint exists, else from localStorage fallback
+  try {
+    const binRes = await fetch('/api/bin');
+    if(binRes.ok) deletedRecords = await binRes.json();
+  } catch(e){
+    deletedRecords = JSON.parse(localStorage.getItem('mp_bin')||'[]');
+  }
+  updateBinBadge();
+  updateUndoRedoBtns();
   render();
+}
+
+function updateBinBadge(){
+  const badge = document.getElementById('binBadge');
+  if(deletedRecords.length > 0){
+    badge.textContent = deletedRecords.length > 99 ? '99+' : deletedRecords.length;
+    badge.style.display = 'flex';
+  } else {
+    badge.style.display = 'none';
+  }
+}
+
+async function saveBin(){
+  try {
+    await fetch('/api/bin', { method:'PUT', headers:{'Content-Type':'application/json'}, body: JSON.stringify(deletedRecords) });
+  } catch(e){
+    localStorage.setItem('mp_bin', JSON.stringify(deletedRecords));
+  }
 }
 
 function fmt(n){ return Number(n||0).toLocaleString('en-NG'); }
@@ -642,6 +786,7 @@ async function saveRecord(){
     price: document.getElementById('f-price').value,
     acct:  document.getElementById('f-acct').value.trim()
   };
+  snapshotState();
   if(editId){
     await fetch('/api/records/'+editId,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(rec)});
   } else {
@@ -651,7 +796,7 @@ async function saveRecord(){
   showToast(editId ? 'Record updated!' : 'Record saved!');
 }
 
-// ── Delete (password required) ────────────────────────────
+// ── Delete → Bin (soft delete, password required) ─────────
 function askDel(id){
   pendingDelId = id;
   document.getElementById('delPass').value = '';
@@ -668,7 +813,6 @@ function closeConfirm(){
   document.getElementById('confirmWrap').classList.remove('open');
 }
 
-// Press Enter in password field to submit
 document.getElementById('delPass').addEventListener('keydown', e=>{
   if(e.key === 'Enter') document.getElementById('confirmYes').click();
 });
@@ -685,7 +829,6 @@ document.getElementById('confirmYes').onclick = async function(){
     return;
   }
 
-  // Verify via login endpoint using current user's username
   const res = await fetch('/api/login',{
     method:'POST',
     headers:{'Content-Type':'application/json'},
@@ -701,15 +844,150 @@ document.getElementById('confirmYes').onclick = async function(){
     return;
   }
 
+  // Soft delete — move to bin
+  snapshotState();
+  const rec = data.find(d=>d.id===pendingDelId);
+  if(rec){
+    rec._deletedAt = new Date().toISOString();
+    rec._deletedBy = currentUser.name;
+    deletedRecords.unshift(rec);
+  }
   await fetch('/api/records/'+pendingDelId, {method:'DELETE'});
+  await saveBin();
   await loadRecords();
   closeConfirm();
-  showToast('Record deleted.', 'warn');
+  showToast('Moved to Bin.', 'warn');
 };
 
 function closeModal(){ document.getElementById('modal').classList.remove('open'); }
 document.getElementById('modal').addEventListener('click', function(e){ if(e.target===this) closeModal(); });
 document.getElementById('confirmWrap').addEventListener('click', function(e){ if(e.target===this) closeConfirm(); });
+
+// ── Bin ───────────────────────────────────────────────────
+function openBin(){
+  // Gate with password
+  document.getElementById('binGatePass').value = '';
+  document.getElementById('binGateErr').classList.remove('show');
+  document.getElementById('binGateWrap').classList.add('open');
+  setTimeout(()=>document.getElementById('binGatePass').focus(), 120);
+}
+
+function closeBinGate(){
+  document.getElementById('binGateWrap').classList.remove('open');
+}
+
+document.getElementById('binGatePass').addEventListener('keydown', e=>{
+  if(e.key === 'Enter') document.getElementById('binGateYes').click();
+});
+
+document.getElementById('binGateYes').onclick = async function(){
+  const pass = document.getElementById('binGatePass').value;
+  const errEl = document.getElementById('binGateErr');
+  errEl.classList.remove('show');
+  if(!pass){ errEl.textContent='Please enter your password.'; errEl.classList.add('show'); return; }
+
+  const res = await fetch('/api/login',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({ username: currentUser.username, password: pass })
+  });
+  const json = await res.json();
+  if(!json.success){
+    errEl.textContent = 'Incorrect password.';
+    errEl.classList.add('show');
+    document.getElementById('binGatePass').value = '';
+    document.getElementById('binGatePass').focus();
+    return;
+  }
+  closeBinGate();
+  renderBinModal();
+  document.getElementById('binModal').classList.add('open');
+};
+
+function closeBinModal(){
+  document.getElementById('binModal').classList.remove('open');
+}
+
+document.getElementById('binModal').addEventListener('click', function(e){ if(e.target===this) closeBinModal(); });
+
+function renderBinModal(){
+  const count = deletedRecords.length;
+  document.getElementById('binCount').textContent = count ? count+' item'+(count>1?'s':'') : 'Empty';
+  document.getElementById('btnEmptyBin').disabled = count === 0;
+
+  const content = document.getElementById('binContent');
+  if(!count){
+    content.innerHTML = '<div class="bin-empty">&#9989; The bin is empty.</div>';
+    return;
+  }
+  content.innerHTML = '<div class="bin-tw"><table>'+
+    '<thead><tr><th>Date</th><th>Invoice</th><th>Customer</th><th>Goods</th><th>Status</th><th>Price</th><th>Deleted At</th><th>Deleted By</th><th></th></tr></thead>'+
+    '<tbody>'+deletedRecords.map((r,i)=>'<tr>'+
+      '<td>'+(r.date||'—')+'</td>'+
+      '<td style="font-size:11px;color:var(--mu);">'+(r.inv||'—')+'</td>'+
+      '<td style="font-weight:600;color:#c084fc;">'+(r.cust||'—')+'</td>'+
+      '<td title="'+(r.goods||'')+'">'+(r.goods||'—')+'</td>'+
+      '<td>'+statusBadge(r.stat)+'</td>'+
+      '<td style="color:var(--gr);">\u20a6'+fmt(r.price)+'</td>'+
+      '<td style="font-size:10px;color:var(--mu);">'+(r._deletedAt ? r._deletedAt.replace('T',' ').slice(0,16) : '—')+'</td>'+
+      '<td style="font-size:10px;color:var(--or);">'+(r._deletedBy||'—')+'</td>'+
+      '<td><div style="display:flex;gap:3px;">'+
+        '<button class="btn xs" style="color:#c084fc;border-color:rgba(192,132,252,.35);" onclick="restoreFromBin(\''+r.id+'\')">&#8617; Restore</button>'+
+        '<button class="btn xs d" onclick="askPermDel(\''+r.id+'\')">&#215; Delete</button>'+
+      '</div></td>'+
+    '</tr>').join('')+
+    '</tbody></table></div>';
+}
+
+async function restoreFromBin(id){
+  snapshotState();
+  const idx = deletedRecords.findIndex(r=>r.id===id);
+  if(idx === -1) return;
+  const rec = {...deletedRecords[idx]};
+  delete rec._deletedAt; delete rec._deletedBy;
+  deletedRecords.splice(idx,1);
+  // Re-add to main records via API
+  await fetch('/api/records',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(rec)});
+  await saveBin();
+  await loadRecords();
+  renderBinModal();
+  showToast('Record restored!');
+}
+
+function askPermDel(id){
+  pendingPermDelId = id;
+  document.getElementById('permDelWrap').classList.add('open');
+}
+function closePermDel(){
+  pendingPermDelId = null;
+  document.getElementById('permDelWrap').classList.remove('open');
+}
+
+document.getElementById('permDelYes').onclick = async function(){
+  if(!pendingPermDelId) return;
+  snapshotState();
+  deletedRecords = deletedRecords.filter(r=>r.id!==pendingPermDelId);
+  pendingPermDelId = null;
+  await saveBin();
+  updateBinBadge();
+  closePermDel();
+  renderBinModal();
+  showToast('Record permanently deleted.','err');
+};
+
+async function emptyBin(){
+  if(!deletedRecords.length) return;
+  if(!confirm('Permanently delete ALL '+deletedRecords.length+' records in the bin? This cannot be undone.')) return;
+  snapshotState();
+  deletedRecords = [];
+  await saveBin();
+  updateBinBadge();
+  renderBinModal();
+  showToast('Bin emptied.','err');
+}
+
+document.getElementById('permDelWrap').addEventListener('click', function(e){ if(e.target===this) closePermDel(); });
+document.getElementById('binGateWrap').addEventListener('click', function(e){ if(e.target===this) closeBinGate(); });
 
 // ── CSV Export ────────────────────────────────────────────
 function exportCSV(){

@@ -7,6 +7,7 @@ app.secret_key = "mobileplace_secret_key_2024"
 
 DATA_FILE = "sales_data.json"
 USERS_FILE = "users_data.json"
+BIN_FILE = "bin_data.json"
 
 DEFAULT_USERS = {
     "admin": {"pass": "admin123", "role": "Admin", "name": "Admin"},
@@ -32,6 +33,16 @@ def load_users():
 def save_users(users):
     with open(USERS_FILE, "w") as f:
         json.dump(users, f, indent=2)
+
+def load_bin():
+    if os.path.exists(BIN_FILE):
+        with open(BIN_FILE, "r") as f:
+            return json.load(f)
+    return []
+
+def save_bin(data):
+    with open(BIN_FILE, "w") as f:
+        json.dump(data, f, indent=2)
 
 @app.route("/")
 def index():
@@ -88,6 +99,12 @@ def add_record():
     save_data(data)
     return jsonify({"success": True})
 
+@app.route("/api/records/bulk", methods=["PUT"])
+def bulk_update_records():
+    data = request.json
+    save_data(data)
+    return jsonify({"success": True})
+
 @app.route("/api/records/<record_id>", methods=["PUT"])
 def update_record(record_id):
     data = load_data()
@@ -104,6 +121,16 @@ def delete_record(record_id):
     data = load_data()
     data = [r for r in data if r.get("id") != record_id]
     save_data(data)
+    return jsonify({"success": True})
+
+@app.route("/api/bin", methods=["GET"])
+def get_bin():
+    return jsonify(load_bin())
+
+@app.route("/api/bin", methods=["PUT"])
+def update_bin():
+    data = request.json
+    save_bin(data)
     return jsonify({"success": True})
 
 if __name__ == "__main__":
