@@ -4,6 +4,7 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>MobilePlace.ng — Sales Record</title>
+<link rel="icon" href="https://i.imgur.com/pdMJjxO.png" type="image/png"/>
 <link rel="manifest" href="/static/manifest.json"/>
 <meta name="theme-color" content="#1C1C1C"/>
 <meta name="apple-mobile-web-app-capable" content="yes"/>
@@ -43,11 +44,8 @@ body{font-family:'Segoe UI',sans-serif;background:var(--dk);color:var(--tx);min-
 .divl{display:flex;align-items:center;gap:10px;margin:12px 0;color:var(--mu);font-size:11px;}
 .divl::before,.divl::after{content:'';flex:1;height:1px;background:var(--br);}
 .demo{margin-top:12px;padding-top:12px;border-top:1px solid var(--br);font-size:11px;color:var(--mu);text-align:center;line-height:1.8;}
-
-/* Auth footer */
 .afooter{text-align:center;font-size:10px;color:var(--mu);margin-top:16px;padding-top:12px;border-top:1px solid var(--br);line-height:1.6;}
 .afooter span{color:var(--gr);font-weight:600;}
-
 .appwrap{background:var(--dk);min-height:100vh;display:flex;flex-direction:column;}
 .topbar{background:var(--dk2);border-bottom:1px solid var(--br);padding:.7rem 1.25rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10;}
 .tl{display:flex;align-items:center;gap:10px;}
@@ -63,18 +61,12 @@ body{font-family:'Segoe UI',sans-serif;background:var(--dk);color:var(--tx);min-
 .blogout{padding:5px 11px;font-size:11px;background:transparent;border:1px solid var(--br);border-radius:8px;color:var(--mu);cursor:pointer;transition:all .2s;}
 .blogout:hover{border-color:#f09595;color:#f09595;}
 .main{padding:1rem 1.25rem;max-width:1400px;margin:0 auto;flex:1;width:100%;}
-
-/* Stats */
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:10px;}
 .sc{background:var(--dk2);border:1px solid var(--br);border-radius:10px;padding:12px 14px;}
 .sl{font-size:10px;color:var(--mu);text-transform:uppercase;letter-spacing:.04em;margin-bottom:5px;}
 .sv{font-size:22px;font-weight:600;}.sv.g{color:var(--gr);}.sv.o{color:var(--or);}.sv.r{color:#f09595;}
 .scomp{font-size:10px;margin-top:4px;font-weight:500;}
-.scomp.up{color:var(--gr);}
-.scomp.dn{color:#f09595;}
-.scomp.eq{color:var(--mu);}
-
-/* Period bar */
+.scomp.up{color:var(--gr);}.scomp.dn{color:#f09595;}.scomp.eq{color:var(--mu);}
 .period-bar{display:flex;align-items:center;gap:6px;margin-bottom:10px;flex-wrap:wrap;background:var(--dk2);border:1px solid var(--br);border-radius:10px;padding:8px 12px;}
 .pbar-year{font-size:12px;padding:5px 9px;border:1px solid var(--br);border-radius:7px;background:var(--dk3);color:var(--tx);outline:none;cursor:pointer;font-weight:600;}
 .pbar-year option{background:var(--dk3);}
@@ -87,7 +79,6 @@ body{font-family:'Segoe UI',sans-serif;background:var(--dk);color:var(--tx);min-
 .mbtn.alltime:hover{border-color:var(--or);}
 .mbtn.alltime.active{background:var(--or);color:#fff;border-color:var(--or);}
 .pbar-label{font-size:10px;color:var(--mu);text-transform:uppercase;letter-spacing:.05em;margin-right:2px;}
-
 .toolbar{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-bottom:10px;}
 .toolbar input[type=text]{font-size:12px;flex:1;min-width:130px;padding:8px 12px;border:1px solid var(--br);border-radius:8px;background:var(--dk3);color:var(--tx);outline:none;}
 .toolbar input[type=text]:focus{border-color:var(--gr);}
@@ -126,15 +117,21 @@ tbody td{padding:8px 10px;color:var(--tx);vertical-align:middle;overflow:hidden;
 .mfr{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
 .mfr3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;}
 .ma{display:flex;gap:8px;justify-content:flex-end;margin-top:1.25rem;padding-top:1rem;border-top:1px solid var(--br);}
+/* Delete confirm */
 .confirm-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:60;align-items:center;justify-content:center;}
 .confirm-overlay.open{display:flex;}
-.confirm-box{background:var(--dk2);border-radius:14px;padding:2rem;width:300px;max-width:90vw;text-align:center;border:1px solid var(--br);}
+.confirm-box{background:var(--dk2);border-radius:14px;padding:2rem;width:320px;max-width:90vw;text-align:center;border:1px solid var(--br);}
 .confirm-box h3{font-size:15px;font-weight:600;margin-bottom:8px;}
-.confirm-box p{font-size:12px;color:var(--mu);margin-bottom:1.25rem;}
+.confirm-box p{font-size:12px;color:var(--mu);margin-bottom:1rem;}
+.del-pass-wrap{margin-bottom:1rem;text-align:left;}
+.del-pass-wrap label{display:block;font-size:10px;color:var(--mu);text-transform:uppercase;letter-spacing:.04em;margin-bottom:5px;}
+.del-pass-wrap input{width:100%;padding:9px 12px;border:1px solid var(--br);border-radius:8px;background:var(--dk3);color:var(--tx);outline:none;font-size:13px;transition:border-color .2s;}
+.del-pass-wrap input:focus{border-color:#f09595;}
+.del-pass-wrap input::placeholder{color:var(--mu);}
+.del-err{font-size:11px;color:#f09595;margin-top:6px;display:none;text-align:left;}
+.del-err.show{display:block;}
 .toast{position:fixed;bottom:24px;right:24px;background:var(--gr);color:#fff;padding:12px 20px;border-radius:10px;font-size:13px;font-weight:500;z-index:999;opacity:0;transition:opacity .3s;pointer-events:none;}
 .toast.show{opacity:1;}.toast.err{background:#A32D2D;}.toast.warn{background:var(--or);}
-
-/* Dashboard footer */
 .dfooter{text-align:center;font-size:10px;color:var(--mu);padding:1rem 0 1.25rem;border-top:1px solid var(--br);margin-top:1.25rem;}
 .dfooter span{color:var(--gr);font-weight:600;}
 </style>
@@ -148,7 +145,7 @@ tbody td{padding:8px 10px;color:var(--tx);vertical-align:middle;overflow:hidden;
   <div class="alogo">
     <div class="alogo-icon"><img src="https://i.imgur.com/pdMJjxO.png" alt="MobilePlace Logo"/></div>
     <div class="t1">MobilePlace.ng</div>
-    <div class="t2">Gadgets & Accessories · Lagos, Nigeria</div>
+    <div class="t2">Gadgets &amp; Accessories · Lagos, Nigeria</div>
   </div>
   <div class="atitle">Staff Login</div>
   <div class="asub">Sign in to access the sales record system</div>
@@ -173,7 +170,7 @@ tbody td{padding:8px 10px;color:var(--tx);vertical-align:middle;overflow:hidden;
   <div class="alogo">
     <div class="alogo-icon"><img src="https://i.imgur.com/pdMJjxO.png" alt="MobilePlace Logo"/></div>
     <div class="t1">MobilePlace.ng</div>
-    <div class="t2">Gadgets & Accessories · Lagos, Nigeria</div>
+    <div class="t2">Gadgets &amp; Accessories · Lagos, Nigeria</div>
   </div>
   <div class="atitle">Create Account</div>
   <div class="asub">Register as a new staff member</div>
@@ -211,7 +208,7 @@ tbody td{padding:8px 10px;color:var(--tx);vertical-align:middle;overflow:hidden;
       <div class="tlogo"><img src="https://i.imgur.com/pdMJjxO.png" alt="MobilePlace Logo"/></div>
       <div>
         <div class="ttitle">MobilePlace.ng — Sales Record</div>
-        <div class="tsub">Gadgets & Accessories · Lagos, Nigeria</div>
+        <div class="tsub">Gadgets &amp; Accessories · Lagos, Nigeria</div>
       </div>
     </div>
     <div class="tr">
@@ -227,20 +224,17 @@ tbody td{padding:8px 10px;color:var(--tx);vertical-align:middle;overflow:hidden;
   </div>
 
   <div class="main">
-
-    <!-- Stats -->
     <div class="stats">
       <div class="sc"><div class="sl">Total Records</div><div class="sv" id="st">0</div></div>
       <div class="sc"><div class="sl">Sold</div><div class="sv g" id="ss">0</div></div>
       <div class="sc"><div class="sl">Pending</div><div class="sv o" id="sp">0</div></div>
       <div class="sc">
         <div class="sl">Total Revenue</div>
-        <div class="sv g" id="sr">₦0</div>
+        <div class="sv g" id="sr">&#8358;0</div>
         <div class="scomp" id="srcomp"></div>
       </div>
     </div>
 
-    <!-- Period Bar -->
     <div class="period-bar">
       <span class="pbar-label">Period:</span>
       <select class="pbar-year" id="yearSel" onchange="onYearChange()"></select>
@@ -262,7 +256,6 @@ tbody td{padding:8px 10px;color:var(--tx);vertical-align:middle;overflow:hidden;
       </div>
     </div>
 
-    <!-- Toolbar -->
     <div class="toolbar">
       <input type="text" id="srch" placeholder="Search name, invoice, IMEI, goods..." oninput="render()"/>
       <select id="fstat" onchange="render()">
@@ -273,7 +266,7 @@ tbody td{padding:8px 10px;color:var(--tx);vertical-align:middle;overflow:hidden;
         <option value="Reserved">Reserved</option>
       </select>
       <button class="btn p" onclick="openAdd()">+ New Record</button>
-      <button class="btn o" onclick="exportCSV()">⬇ Export CSV</button>
+      <button class="btn o" onclick="exportCSV()">&#11015; Export CSV</button>
     </div>
 
     <div class="tw">
@@ -287,16 +280,15 @@ tbody td{padding:8px 10px;color:var(--tx);vertical-align:middle;overflow:hidden;
     </colgroup>
     <thead><tr>
       <th>SN</th><th>Date</th><th>Invoice</th>
-      <th>Customer</th><th>Goods & Services</th><th>Storage</th>
+      <th>Customer</th><th>Goods &amp; Services</th><th>Storage</th>
       <th>Color</th><th>IMEI 1</th><th>IMEI 2</th>
-      <th>Sold By</th><th>Status</th><th>Price (₦)</th>
+      <th>Sold By</th><th>Status</th><th>Price (&#8358;)</th>
       <th>Account</th><th></th>
     </tr></thead>
     <tbody id="tbody"></tbody>
     </table>
     </div>
 
-    <!-- Dashboard footer -->
     <div class="dfooter">© <span id="footerYearApp"></span> <span>EmmyTech</span> · All rights reserved</div>
   </div>
 </div>
@@ -311,7 +303,7 @@ tbody td{padding:8px 10px;color:var(--tx);vertical-align:middle;overflow:hidden;
     <div class="mfg"><label>Invoice No</label><input type="text" id="f-inv" placeholder="e.g. MP-2024-001"/></div>
   </div>
   <div class="mfg"><label>Customer Name</label><input type="text" id="f-cust" placeholder="Full name"/></div>
-  <div class="mfg"><label>Goods & Services</label><input type="text" id="f-goods" placeholder="e.g. iPhone 16 Pro Max..."/></div>
+  <div class="mfg"><label>Goods &amp; Services</label><input type="text" id="f-goods" placeholder="e.g. iPhone 16 Pro Max..."/></div>
   <div class="mfr3">
     <div class="mfg"><label>Storage</label><input type="text" id="f-stor" placeholder="e.g. 256GB"/></div>
     <div class="mfg"><label>Color</label><input type="text" id="f-color" placeholder="e.g. Black Titanium"/></div>
@@ -324,22 +316,36 @@ tbody td{padding:8px 10px;color:var(--tx);vertical-align:middle;overflow:hidden;
     <div class="mfg"><label>IMEI 2</label><input type="text" id="f-imei2" placeholder="(dual SIM)"/></div>
   </div>
   <div class="mfr">
-    <div class="mfg"><label>Sold By</label><input type="text" id="f-by" placeholder="Staff name"/></div>
+    <!-- CHANGED: Sold By is now a dropdown -->
+    <div class="mfg"><label>Sold By</label>
+      <select id="f-by">
+        <option value="">-- Select Staff --</option>
+        <option value="CEO">CEO</option>
+        <option value="JOSHUA">JOSHUA</option>
+        <option value="EMMANUEL">EMMANUEL</option>
+        <option value="FAITH">FAITH</option>
+      </select>
+    </div>
     <div class="mfg"><label>Account</label><input type="text" id="f-acct" placeholder="e.g. Cash, Transfer, POS"/></div>
   </div>
-  <div class="mfg"><label>Price (₦)</label><input type="number" id="f-price" placeholder="0" min="0"/></div>
+  <div class="mfg"><label>Price (&#8358;)</label><input type="number" id="f-price" placeholder="0" min="0"/></div>
   <div class="ma">
     <button class="btn" onclick="closeModal()">Cancel</button>
-    <button class="btn p" onclick="saveRecord()">💾 Save Record</button>
+    <button class="btn p" onclick="saveRecord()">&#128190; Save Record</button>
   </div>
 </div>
 </div>
 
-<!-- Delete Confirm -->
+<!-- Delete Confirm — requires password -->
 <div class="confirm-overlay" id="confirmWrap">
   <div class="confirm-box">
-    <h3>Delete this record?</h3>
-    <p>This action cannot be undone.</p>
+    <h3>&#128465; Delete Record?</h3>
+    <p>This cannot be undone. Enter your login password to confirm.</p>
+    <div class="del-pass-wrap">
+      <label>Your Password</label>
+      <input type="password" id="delPass" placeholder="Enter your password"/>
+      <div class="del-err" id="delErr"></div>
+    </div>
     <div style="display:flex;gap:8px;justify-content:center;">
       <button class="btn" onclick="closeConfirm()">Cancel</button>
       <button class="btn d" id="confirmYes">Delete</button>
@@ -358,7 +364,7 @@ let currentUser = null;
 
 const NOW = new Date();
 let selectedYear  = NOW.getFullYear();
-let selectedMonth = NOW.getMonth() + 1; // 1-12
+let selectedMonth = NOW.getMonth() + 1;
 let allTime = false;
 
 const MONTH_NAMES = ['January','February','March','April','May','June',
@@ -468,7 +474,7 @@ async function loadRecords(){
 function fmt(n){ return Number(n||0).toLocaleString('en-NG'); }
 function statusBadge(s){
   const m = {Sold:'bs',Pending:'bp',Returned:'brt',Reserved:'bb'};
-  return `<span class="badge ${m[s]||'bb'}">${s||'—'}</span>`;
+  return '<span class="badge '+(m[s]||'bb')+'">'+(s||'—')+'</span>';
 }
 
 // ── Period logic ──────────────────────────────────────────
@@ -495,23 +501,9 @@ function updatePeriodButtons(){
   }
 }
 
-function setAllTime(){
-  allTime = true;
-  updatePeriodButtons();
-  render();
-}
-
-function setMonthBtn(m){
-  allTime = false;
-  selectedMonth = m;
-  updatePeriodButtons();
-  render();
-}
-
-function onYearChange(){
-  selectedYear = parseInt(document.getElementById('yearSel').value);
-  if(!allTime) render();
-}
+function setAllTime(){ allTime = true; updatePeriodButtons(); render(); }
+function setMonthBtn(m){ allTime = false; selectedMonth = m; updatePeriodButtons(); render(); }
+function onYearChange(){ selectedYear = parseInt(document.getElementById('yearSel').value); if(!allTime) render(); }
 
 function filterByPeriod(records){
   if(allTime) return records;
@@ -523,7 +515,6 @@ function filterByPeriod(records){
 }
 
 function getPrevMonthRevenue(){
-  // Returns revenue of sold items from the previous month
   let pm = selectedMonth - 1, py = selectedYear;
   if(pm === 0){ pm = 12; py--; }
   const prev = data.filter(r=>{
@@ -551,84 +542,66 @@ function render(){
   document.getElementById('st').textContent = periodData.length;
   document.getElementById('ss').textContent = sold.length;
   document.getElementById('sp').textContent = periodData.filter(r=>r.stat==='Pending').length;
-  document.getElementById('sr').textContent = '₦'+fmt(curRevenue);
+  document.getElementById('sr').textContent = '\u20a6'+fmt(curRevenue);
 
-  // Revenue comparison vs last month
   const comp = document.getElementById('srcomp');
   if(!allTime){
     const prevRev = getPrevMonthRevenue();
     if(prevRev === 0 && curRevenue === 0){
-      comp.textContent = '';
-      comp.className = 'scomp';
+      comp.textContent = ''; comp.className = 'scomp';
     } else if(prevRev === 0 && curRevenue > 0){
-      comp.textContent = '↑ New this month';
-      comp.className = 'scomp up';
+      comp.textContent = '\u2191 New this month'; comp.className = 'scomp up';
     } else {
       const diff = curRevenue - prevRev;
       const pct  = Math.abs((diff / prevRev) * 100).toFixed(1);
-      if(diff > 0){
-        comp.textContent = `↑ +${pct}% vs last month`;
-        comp.className = 'scomp up';
-      } else if(diff < 0){
-        comp.textContent = `↓ -${pct}% vs last month`;
-        comp.className = 'scomp dn';
-      } else {
-        comp.textContent = '→ Same as last month';
-        comp.className = 'scomp eq';
-      }
+      if(diff > 0){ comp.textContent = '\u2191 +'+pct+'% vs last month'; comp.className = 'scomp up'; }
+      else if(diff < 0){ comp.textContent = '\u2193 -'+pct+'% vs last month'; comp.className = 'scomp dn'; }
+      else { comp.textContent = '\u2192 Same as last month'; comp.className = 'scomp eq'; }
     }
-  } else {
-    comp.textContent = '';
-    comp.className = 'scomp';
-  }
+  } else { comp.textContent = ''; comp.className = 'scomp'; }
 
   const tb = document.getElementById('tbody');
   if(!rows.length){
-    tb.innerHTML = `<tr><td colspan="14" class="empty">No records found. Click "+ New Record" to add one.</td></tr>`;
+    tb.innerHTML = '<tr><td colspan="14" class="empty">No records found. Click "+ New Record" to add one.</td></tr>';
     return;
   }
-  tb.innerHTML = rows.map((r,i)=>`<tr>
-    <td style="color:var(--mu);font-size:10px;">${i+1}</td>
-    <td style="color:var(--mu);">${r.date||'—'}</td>
-    <td style="color:var(--mu);font-size:11px;">${r.inv||'—'}</td>
-    <td style="font-weight:600;color:var(--gr);">${r.cust||'—'}</td>
-    <td title="${r.goods||''}">${r.goods||'—'}</td>
-    <td>${r.stor||'—'}</td>
-    <td>${r.color||'—'}</td>
-    <td style="font-size:10px;font-family:monospace;color:var(--mu);">${r.imei1||'—'}</td>
-    <td style="font-size:10px;font-family:monospace;color:var(--mu);">${r.imei2||'—'}</td>
-    <td style="color:var(--or);">${r.by||'—'}</td>
-    <td>${statusBadge(r.stat)}</td>
-    <td style="font-weight:600;color:var(--gr);">₦${fmt(r.price)}</td>
-    <td>${r.acct||'—'}</td>
-    <td><div style="display:flex;gap:3px;">
-      <button class="btn xs" onclick="openEdit('${r.id}')">Edit</button>
-      <button class="btn xs d" onclick="askDel('${r.id}')">Del</button>
-    </div></td>
-  </tr>`).join('');
+  tb.innerHTML = rows.map((r,i)=>'<tr>'+
+    '<td style="color:var(--mu);font-size:10px;">'+(i+1)+'</td>'+
+    '<td style="color:var(--mu);">'+(r.date||'—')+'</td>'+
+    '<td style="color:var(--mu);font-size:11px;">'+(r.inv||'—')+'</td>'+
+    '<td style="font-weight:600;color:var(--gr);">'+(r.cust||'—')+'</td>'+
+    '<td title="'+(r.goods||'')+'">'+(r.goods||'—')+'</td>'+
+    '<td>'+(r.stor||'—')+'</td>'+
+    '<td>'+(r.color||'—')+'</td>'+
+    '<td style="font-size:10px;font-family:monospace;color:var(--mu);">'+(r.imei1||'—')+'</td>'+
+    '<td style="font-size:10px;font-family:monospace;color:var(--mu);">'+(r.imei2||'—')+'</td>'+
+    '<td style="color:var(--or);">'+(r.by||'—')+'</td>'+
+    '<td>'+statusBadge(r.stat)+'</td>'+
+    '<td style="font-weight:600;color:var(--gr);">\u20a6'+fmt(r.price)+'</td>'+
+    '<td>'+(r.acct||'—')+'</td>'+
+    '<td><div style="display:flex;gap:3px;">'+
+      '<button class="btn xs" onclick="openEdit(\''+r.id+'\')">Edit</button>'+
+      '<button class="btn xs d" onclick="askDel(\''+r.id+'\')">Del</button>'+
+    '</div></td>'+
+  '</tr>').join('');
 }
 
 // ── Add / Edit ────────────────────────────────────────────
 function getDefaultDate(){
-  // If a specific month is selected, default to today if it's that month, else 1st of that month
-  if(allTime){
-    return NOW.toISOString().slice(0,10);
-  }
+  if(allTime) return NOW.toISOString().slice(0,10);
   const todayY = NOW.getFullYear(), todayM = NOW.getMonth()+1;
-  if(selectedYear === todayY && selectedMonth === todayM){
-    return NOW.toISOString().slice(0,10);
-  }
-  return `${selectedYear}-${String(selectedMonth).padStart(2,'0')}-01`;
+  if(selectedYear === todayY && selectedMonth === todayM) return NOW.toISOString().slice(0,10);
+  return selectedYear+'-'+String(selectedMonth).padStart(2,'0')+'-01';
 }
 
 function openAdd(){
   editId = null;
   document.getElementById('mtitle').textContent = 'New Record';
   document.getElementById('f-date').value = getDefaultDate();
-  ['inv','cust','goods','stor','color','imei1','imei2','by','acct','price'].forEach(f=>document.getElementById('f-'+f).value='');
+  ['inv','cust','goods','stor','color','imei1','imei2','acct','price'].forEach(f=>document.getElementById('f-'+f).value='');
   document.getElementById('f-inv').value = 'MP-'+Date.now().toString().slice(-6);
   document.getElementById('f-stat').value = 'Sold';
-  if(currentUser) document.getElementById('f-by').value = currentUser.name;
+  document.getElementById('f-by').value = '';
   document.getElementById('modal').classList.add('open');
 }
 
@@ -664,13 +637,13 @@ async function saveRecord(){
     color: document.getElementById('f-color').value.trim(),
     imei1: document.getElementById('f-imei1').value.trim(),
     imei2: document.getElementById('f-imei2').value.trim(),
-    by:    document.getElementById('f-by').value.trim(),
+    by:    document.getElementById('f-by').value,
     stat:  document.getElementById('f-stat').value,
     price: document.getElementById('f-price').value,
     acct:  document.getElementById('f-acct').value.trim()
   };
   if(editId){
-    await fetch(`/api/records/${editId}`,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(rec)});
+    await fetch('/api/records/'+editId,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(rec)});
   } else {
     await fetch('/api/records',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(rec)});
   }
@@ -678,40 +651,79 @@ async function saveRecord(){
   showToast(editId ? 'Record updated!' : 'Record saved!');
 }
 
-// ── Delete ────────────────────────────────────────────────
-function askDel(id){ pendingDelId=id; document.getElementById('confirmWrap').classList.add('open'); }
-function closeConfirm(){ pendingDelId=null; document.getElementById('confirmWrap').classList.remove('open'); }
+// ── Delete (password required) ────────────────────────────
+function askDel(id){
+  pendingDelId = id;
+  document.getElementById('delPass').value = '';
+  document.getElementById('delErr').textContent = '';
+  document.getElementById('delErr').classList.remove('show');
+  document.getElementById('confirmWrap').classList.add('open');
+  setTimeout(()=>document.getElementById('delPass').focus(), 120);
+}
+
+function closeConfirm(){
+  pendingDelId = null;
+  document.getElementById('delPass').value = '';
+  document.getElementById('delErr').classList.remove('show');
+  document.getElementById('confirmWrap').classList.remove('open');
+}
+
+// Press Enter in password field to submit
+document.getElementById('delPass').addEventListener('keydown', e=>{
+  if(e.key === 'Enter') document.getElementById('confirmYes').click();
+});
+
 document.getElementById('confirmYes').onclick = async function(){
   if(!pendingDelId) return;
-  await fetch(`/api/records/${pendingDelId}`,{method:'DELETE'});
-  await loadRecords(); closeConfirm();
-  showToast('Record deleted.','warn');
+  const pass = document.getElementById('delPass').value;
+  const errEl = document.getElementById('delErr');
+  errEl.classList.remove('show');
+
+  if(!pass){
+    errEl.textContent = 'Please enter your password.';
+    errEl.classList.add('show');
+    return;
+  }
+
+  // Verify via login endpoint using current user's username
+  const res = await fetch('/api/login',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({ username: currentUser.username, password: pass })
+  });
+  const json = await res.json();
+
+  if(!json.success){
+    errEl.textContent = 'Incorrect password. Please try again.';
+    errEl.classList.add('show');
+    document.getElementById('delPass').value = '';
+    document.getElementById('delPass').focus();
+    return;
+  }
+
+  await fetch('/api/records/'+pendingDelId, {method:'DELETE'});
+  await loadRecords();
+  closeConfirm();
+  showToast('Record deleted.', 'warn');
 };
 
 function closeModal(){ document.getElementById('modal').classList.remove('open'); }
 document.getElementById('modal').addEventListener('click', function(e){ if(e.target===this) closeModal(); });
 document.getElementById('confirmWrap').addEventListener('click', function(e){ if(e.target===this) closeConfirm(); });
 
-// ── Smart CSV Export ──────────────────────────────────────
+// ── CSV Export ────────────────────────────────────────────
 function exportCSV(){
   const periodData = filterByPeriod(data);
   if(!periodData.length){ showToast('No records to export.','err'); return; }
-
   const cols = ['SN','Date','Invoice No','Customer Name','Goods & Services',
                 'Storage','Color','IMEI 1','IMEI 2','Sold By','Status','Price','Account'];
   const rows = periodData.map((r,i)=>[
     i+1,r.date,r.inv,r.cust,r.goods,r.stor,r.color,r.imei1,r.imei2,r.by,r.stat,r.price,r.acct
-  ].map(v=>`"${(v||'').toString().replace(/"/g,'""')}"`).join(','));
+  ].map(v=>'"'+((v||'').toString().replace(/"/g,'""'))+'"').join(','));
   const csv = [cols.join(','),...rows].join('\n');
-
-  // Smart filename
-  let fname;
-  if(allTime){
-    fname = `MobilePlace_All_Time_${NOW.toISOString().slice(0,10)}`;
-  } else {
-    fname = `MobilePlace_${MONTH_SHORT[selectedMonth-1]}_${selectedYear}`;
-  }
-
+  let fname = allTime
+    ? 'MobilePlace_All_Time_'+NOW.toISOString().slice(0,10)
+    : 'MobilePlace_'+MONTH_SHORT[selectedMonth-1]+'_'+selectedYear;
   const a = document.createElement('a');
   a.href = 'data:text/csv;charset=utf-8,\uFEFF'+encodeURIComponent(csv);
   a.download = fname+'.csv';
